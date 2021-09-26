@@ -41,7 +41,7 @@ function updateDescription(hash) {
     desc.appendChild(explain);
 }
 
-const url = "palette.png";
+const url = canvas.getAttribute("data");
 const im = new Image();
 im.src = url;
 im.onload = function() {

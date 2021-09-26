@@ -27,14 +27,14 @@
                    if you have full color management enabled.</aside>
         </header>
         <div style="margin: 10px; display: flex;">
-            <canvas id="canvas" style="margin: auto;">You need a browser recent 
-            enough to support the canvas element and enable Javascript to use 
-            this page.</canvas>
+            <canvas id="canvas" style="margin: auto;" data="palette.png">
+            You need a browser recent enough to support the canvas element 
+            and enable Javascript to use this page.</canvas>
         </div>
         <div id="description" style="display: inline-grid;"></div>
         <h2>How it works</h2>
         <p>When full color management is enabled, Firefox will modify the colors
-           of input images to have the appropriate appearance given what it knows
+           of images to have the appropriate appearance given what it knows
            about the color gamut of your monitor. This also includes images that
            are loaded into <code>&lt;canvas&gt;</code> elements.</p>
         <p>Unfortunately, when Javascript then requests the browser tell it what
@@ -44,4 +44,35 @@
            profile that matches your monitor, the results are almost certainly
            unique to you and can be used to track you across sites and sessions,
            even in Private mode.</p>
+        <h2>Which configurations are affected</h2>
+        <p>Every configuration with full color management, i.e. a color profile 
+        set (either automatically pulled from the system or set manually with
+        <code>gfx.color_management.display_profile</code>) and full color 
+        management turned on (<code>gfx.color_management.mode = 1</code>), is
+        affected by this issue.</p>
+        <h3>Important note:</h3>
+        <p>In order to avoid false positives, I did not tag the test image with
+        a profile. This is why full color management has to be enabled. A
+        fingerprinter not worried about producing a lot of false positives could
+        tag the test image with an sRGB profile, thereby triggering color
+        management directly (as long as a monitor profile is set).</p>
+        <p>The reason this triggers false positives is that some browsers 
+        (possibly including Safari?) could be performing a conversion to
+        sRGB in such a way that the resulting data on the canvas does get 
+        modified, but not in way that varies from user to user.</p>
+        <p>If you would like to try this proof of concept with these false
+        positives permitted, <a href="falsepositives.html">click here</a>.</p>
+        <h2>Note about macOS:</h3>
+        <p>On macOS, Firefox converts all images to sRGB at the first stage in
+        the pipeline. This means that the gamut of images is limited: you can't
+        view wide gamut or HDR images in Firefox on macOS. Firefox does this in
+        order to get color management for free on that platform, which works fine
+        as long as you don't need to view wide gamut images. This is a new feature
+        <a href="https://www.mozilla.org/en-US/firefox/89.0/releasenotes/">
+            as of Firefox 89</a>.</p>
+        <p>This has the side effect of breaking the demo. The data on the canvas
+        is just the sRGB data (the same as the input file), so when it is
+        retrieved later it has not been modified. In order to change this, you
+        have to disable the new behavior and use traditional color management
+        instead:<pre>gfx.color_management.native_srgb = false</pre></p>
     </body>

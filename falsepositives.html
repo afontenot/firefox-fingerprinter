@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Firefox Fingerprinter</title>
+        <meta charset="utf-8"/>
+        <style type="text/css">
+            body {
+                margin:40px auto;
+                max-width:650px;
+                line-height:1.6;
+                font-size:18px;
+                color:#444;
+                padding:0 10px;
+            }
+            h1,h2,h3 {
+                line-height:1.2;
+            }
+        </style>
+        <script defer src="canvas.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>
+                Firefox Fingerprinter
+            </h1>
+            <aside>Creates a possibly-unique fingerprint of your Firefox 
+                browser. False positives are allowed.</aside>
+        </header>
+        <div style="margin: 10px; display: flex;">
+            <canvas id="canvas" style="margin: auto;" data="palette_srgb.png">
+            You need a browser recent enough to support the canvas element and 
+            enable Javascript to use this page.</canvas>
+        </div>
+        <div id="description" style="display: inline-grid;"></div>
+    </body>
