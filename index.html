@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Firefox Fingerprinter</title>
+        <meta charset="utf-8"/>
+        <style type="text/css">
+            body {
+                margin:40px auto;
+                max-width:650px;
+                line-height:1.6;
+                font-size:18px;
+                color:#444;
+                padding:0 10px;
+            }
+            h1,h2,h3 {
+                line-height:1.2;
+            }
+        </style>
+        <script defer src="canvas.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>
+                Firefox Fingerprinter
+            </h1>
+            <aside>Creates a probably-unique fingerprint of your Firefox browser
+                   if you have full color management enabled.</aside>
+        </header>
+        <div style="margin: 10px; display: flex;">
+            <canvas id="canvas" style="margin: auto;">You need a browser recent 
+            enough to support the canvas element and enable Javascript to use 
+            this page.</canvas>
+        </div>
+        <div id="description" style="display: inline-grid;"></div>
+        <h2>How it works</h2>
+        <p>When full color management is enabled, Firefox will modify the colors
+           of input images to have the appropriate appearance given what it knows
+           about the color gamut of your monitor. This also includes images that
+           are loaded into <code>&lt;canvas&gt;</code> elements.</p>
+        <p>Unfortunately, when Javascript then requests the browser tell it what
+           pixels are in the canvas, it gives it back the modified pixels that
+           are now color managed, not the original pixels that the Javascript 
+           loaded in. If you have gone to the trouble of using a custom color
+           profile that matches your monitor, the results are almost certainly
+           unique to you and can be used to track you across sites and sessions,
+           even in Private mode.</p>
+    </body>
